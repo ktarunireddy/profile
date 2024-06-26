@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title >Digital Profile</title>
+
+    <!-- Include Font Awesome CDN -->
+    <linK rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            bacKground-color: beige;
+            overflow: hidden; /* Prevent scrolling of the entire page */
+        }
+
+        .navbar {
+            bacKground-color: pinK;
+            padding: 24px; /* Increase padding */
+            text-align: center; /* Center align text */
+            position: fixed; /* Ensure the navbar stays fixed at the top */
+            width: 100%; /* Occupy the full width of the viewport */
+            z-index: 2; /* Ensure the navbar stays above the profile image */
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: inline-blocK; /* Display list items inline */
+        }
+
+        .navbar li {
+            display: inline;
+            margin-right: 20px; /* Increase margin */
+        }
+
+        .navbar button {
+            bacKground-color: transparent;
+            border: none;
+            color: #fff;
+            font-size: 25px; /* Increase font size */
+            cursor: pointer;
+        }
+
+        /* Hamburger button styles */
+        .hamburger-btn {
+            display: blocK;
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            color: white;
+            cursor: pointer;
+            z-index: 3; /* Ensure the button stays above other elements */
+            font-size: 24px;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bacKground-color: beige;
+            padding-top: 80px; /* Adjust the padding to leave space for the navbar */                    
+            z-index: 2; /* Ensure the sidebar stays above other elements */
+            overflow-y: auto; /* Enable scrolling for overflow content */
+            display: none; /* Initially hide the sidebar */
+            transition: width 0.3s; /* Add transition for smooth width change */
+        }
+
+        .sidebar a {
+            display: blocK;
+            padding: 16px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center; /* Center align container content */
+            align-items: center; /* Center align container content */
+            height: 100vh; /* MaKe the container taKe the full viewport height */
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            margin-top: 100px; /* Ensure content starts below the fixed navbar */
+        }
+
+        /* Profile layout styles */
+        .profile-details {
+            display: flex;
+            align-items: flex-start; /* Align items at the start of the container */
+        }
+
+        .profile-image {
+            flex: 0 0 50%; /* Set the profile image to taKe up half of the container width */
+            max-width: 50%; /* Ensure the image does not exceed half of the container width */
+            z-index: 1; /* Ensure the image stays behind the navbar */
+            position: fixed; /* Fix the position of the profile image */
+            top: 100px; /* Position the image below the navbar */
+            left: 0; /* Position the image at the left */
+            height: calc(100vh - 100px); /* MaKe the image taKe the full height of the viewport below the navbar */
+            overflow: hidden; /* Hide any overflowing content */
+        }
+
+        .profile-image img {
+            width: 200%;
+            height: 100%;
+            object-fit: cover; /* Ensure the entire image is visible and fills the container */
+        }
+
+        .profile-text {
+            flex: 0 0 50%; /* Set the profile text to taKe up half of the container width */
+            padding: 15px; /* Add padding around the text */
+            bacKground-color: beige;
+            font-size: 10px;
+            text-align: left;
+            color: maroon;
+            margin-left: 45%; /* Position the text content to the right of the image */
+            box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+            height: calc(100vh - 100px); /* MaKe the text container taKe the full height of the viewport below the navbar */
+            overflow-y: hidden; /* Enable vertical scrolling for overflow content */
+        }
+
+        .profile-text p {
+            font-family: Oswald, cursive, sans-serif; /* Change font for paragraph elements */
+        }
+
+        .profile-text strong {
+            font-family: Arial, Helvetica, sans-serif; /* Change font for strong (bold) elements */
+        }
+
+        /* Adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .profile-details {
+                flex-direction: column; /* StacK items vertically on smaller screens */
+            }
+
+            .profile-image {
+                width: 100%; /* MaKe the image taKe full width on smaller screens */
+                margin-right: 0; /* Remove margin for smaller screens */
+                margin-bottom: 20px; /* Add margin below the image */
+            }
+
+            .main-content {
+                margin-top: 160px; /* Adjust margin for smaller screens */
+            }
+
+            .profile-text {
+                margin-left: 0; /* Reset margin for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hamburger button -->
+<div class="hamburger-btn" onclicK="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</div>
+
+<nav class="navbar">
+    <ul>
+        <li><h1 style="color: white; margin-bottom: 10px;">Digital Profile</h1></li>
+        <li><button onclicK="showSection('profile')">Profile</button></li>
+        <li><button onclicK="showSection('education')">Education</button></li>
+        <li><button onclicK="showSection('contact')">Contact</button></li>
+        <li><button onclicK="showSection('hobbies')">Hobbies</button></li>
+        <li><button onclicK="showSection('Sports')">Sports</button></li>
+        <li><button onclicK="showSection('Skills')">Skills</button></li>
+
+    </ul>
+</nav>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <a href="#" onclicK="openInNewTab('resume')">Resume</a>
+    
+</div>
+
+<div class="container">
+    <div class="main-content">
+        <!-- Profile Section -->
+        <section id="profile">
+            <h2>Profile</h2>
+            <div class="profile-details">
+                <div class="profile-image">
+                    <!-- Replace 'image-url.jpg' with the actual URL of the person's image -->
+                    <img src="C:\Users\Admin\OneDrive\Desktop\profile\pic.jpeg" alt="Person Image">
+                </div>
+                <div class="profile-text" style="font-size: 28px;">
+                    <p><strong>Name:</strong> K Taruni Reddy</p>
+                    <p><strong>Date of Birth:</strong> 30-12-2004 </p>
+                    <p><strong>Address:</strong> Hyderabad</p>
+                    <p><strong>Pincode:</strong> 502032</p>
+                    <p><strong>Email:</strong> tarunireddy7687@gmail.com</p>
+                    <p><strong>Contact:</strong> (+91)7989181192 </p>
+                </div>
+            </div>
+        </section>
+
+      
+	<!-- Education Section -->
+	<section id="education" style="display: none;">
+ <h2>Education</h2>
+    <div class="education-details">
+        <div class="education-image">
+            <img src="path_to_school_image.jpg" alt="School Image">
+        </div>
+        <div class="education-text">
+             <p>School Name: VIGNAN GLOBAL GEN SCHOOL</p>
+   		 <p>College Name: SRIDEVI ENGINEERING COLLEGE </p>
+    		 <p>Degree: BACHELOR OF SCIENCE</p>
+    		 <p>Field of Study: COMPUTER SCIENCE</p>
+   		 <p>Year of Graduation: 2026</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- Contact Section -->
+<section id="contact" style="display: none;">
+    <h2>Contact</h2>
+    <p><strong>Email:</strong> taruni7687@gmail.com</p>
+    <p><strong>Phone:</strong> +917989181192/p>
+    <p><strong>Address:</strong> 7-87,Tellapur,Hyderabad,Telangana,India</p>
+</section>
+
+
+      <!-- Hobbies Section -->
+<section id="hobbies" style="display: none;">
+    <h2>Hobbies</h2>
+    <ul>
+        <li>Reading</li>
+        <li>musicophile</li>
+        <li>Traveling</li>
+    </ul>
+</section>
+
+
+
+        <!-- Sports Section -->
+        <section id="Sports" style="display: none;">
+            <h2>Sports</h2>
+            <p>District level KABBADI player(2018)-WINNER</p>
+	    <p>Inter level BASKETBALL player(2022)-RUNNER</p>
+	    <p>INter level BASKETBALL player(2023)-WINNER</p>
+        </section>
+
+
+
+        <!-- Skills Section -->
+        <section id="Skills" style="display: none;">
+            <h2>Skills</h2>
+                <li>HTML</li>
+		<li>CSS</li>
+        	<li>C</li>
+        	<li>Python</li>
+		
+        </section>
+
+
+
+           </div>
+</div>
+
+<script>
+        function showSection(sectionId) {
+        // Hide all sections
+        var sections = document.querySelectorAll('.main-content section');
+        sections.forEach(function(section) {
+            section.style.display = 'none';
+        });
+        
+        // Show selected section
+        var selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+            selectedSection.style.display = 'blocK';
+        }
+    }
+
+    function toggleSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        sidebar.style.display = sidebar.style.display === 'blocK' ? 'none' : 'blocK';
+    }
+
+    function openInNewTab(sectionId) {
+        var url;
+        if (sectionId === 'resume') {
+            url = 'file:///C:/Users/Admin/DesKtop/digital%20profile/Taruni_resume%20(1).pdf';
+            window.open(url, '_blanK'); // Open the resume section in a new tab
+        } 
+    }
+</script>
+
+</body>
+</html>)
